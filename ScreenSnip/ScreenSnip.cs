@@ -7,7 +7,7 @@ namespace ScreenSnip {
     class ScreenSnip {
         private static Image screenshot;
         private static Bitmap final_image;
-        private static string dir;
+        private static string dir = "";
 
         public static void Snip(int x, int y, int w, int h) {
             takeScreenshot();
@@ -44,7 +44,8 @@ namespace ScreenSnip {
         }
 
         private static string getPath() {
-            dir = readPath();
+            string[] args = Environment.GetCommandLineArgs();
+            if(args.Length == 2)  dir = args[1];
             if(dir.Length == 0 || !Directory.Exists(dir)) dir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Screenshots\\";
             Directory.CreateDirectory(dir);
 
@@ -58,23 +59,5 @@ namespace ScreenSnip {
             return path;
         }
 
-        private static string readPath() {
-            var path = AppDomain.CurrentDomain.BaseDirectory + "config.cfg";
-            if (File.Exists(path)) {
-                foreach (var line in File.ReadLines(path)) {
-                    if (line.StartsWith("path")) {
-                        var pair = line.Split('=');
-                        if(pair.Length == 2) {
-                            var value = pair[1];
-                            if(value != "") {
-                                if (!value.EndsWith("\\")) value += "\\";
-                                return value;
-                            }
-                        }
-                    }
-                }
-            }
-            return "";
-        }
     }
 }
