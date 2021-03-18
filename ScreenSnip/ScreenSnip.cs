@@ -49,7 +49,8 @@ namespace ScreenSnip {
             if(dir.Length == 0 || !Directory.Exists(dir)) dir = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\Screenshots\\";
             Directory.CreateDirectory(dir);
 
-            var name = DateTime.Now.ToString().Replace(".", "-").Replace(" ", "_").Replace(":", "-");
+            DateTime date = DateTime.Now;
+            var name = date.Year + "-" + date.Month + "-" + date.Day + "_" + date.Hour + "-" + date.Minute + "-" + date.Second;
             var path = dir + "\\" + name + ".png";
             int i = 2;
             while (File.Exists(path)) {
