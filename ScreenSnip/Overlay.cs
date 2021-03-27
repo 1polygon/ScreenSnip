@@ -84,13 +84,12 @@ namespace ScreenSnip {
                 if (m.Msg == 513 || m.Msg == 162) { // left click
                     if (!selecting) {
                         selecting = true;
-                        box.Visible = true;
                         selection.p1 = new Point(Control.MousePosition.X, Control.MousePosition.Y);
                     } else {
                         selection.p2 = new Point(Control.MousePosition.X, Control.MousePosition.Y);
                         selection.Update();
                         form.Visible = false;
-                        ScreenSnip.Snip(selection.x, selection.y, selection.w, selection.h);
+                        if(selection.w > 0 && selection.h > 0) ScreenSnip.Snip(selection.x, selection.y, selection.w, selection.h);
                         Application.Exit();
                     }
                 } else if (m.Msg == 517 || m.Msg == 165) Application.Exit(); // right click
